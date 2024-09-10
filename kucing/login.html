@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Job Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form>
+            <input type="text" id="loginUsername" placeholder="Username" required />
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <select id="loginRole" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="jobseeker">Job Seeker</option>
+                <option value="company">Company</option>
+            </select>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+
+        <div>
+            <p>Forgot Password? <a href="reset-password.html">Reset here</a></p>
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+    </div>
+    <script src="login.js"></script>
+</body>
+
+</html>

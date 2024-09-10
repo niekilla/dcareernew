@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Diri</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Profil Diri</h1>
+    <form id="profileForm">
+        <label for="name">Nama:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Telepon:</label>
+        <input type="tel" id="phone" name="phone">
+
+        <label for="cv">Upload CV (PDF):</label>
+        <input type="file" id="cv" name="cv" accept=".pdf">
+
+        <label for="photo">Upload Foto (JPG/PNG):</label>
+        <input type="file" id="photo" name="photo" accept=".jpg, .png">
+
+        <label for="nim">NIM:</label>
+        <input type="text" id="nim" name="nim">
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="student">Mahasiswa</option>
+            <option value="alumni">Alumni</option>
+        </select>
+
+        <button type="submit">Simpan</button>
+    </form>
+    <script src="profile.js"></script>
+</body>
+
+</html>

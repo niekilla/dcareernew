@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Company Information</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* General styles for the navbar */
+      .navbar {
+        background-color: #333;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+      }
+
+      .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+
+      .navbar li {
+        position: relative;
+      }
+
+      .navbar li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+      }
+
+      .navbar li a:hover {
+        background-color: #575757;
+      }
+
+      /* Submenu styles */
+      .submenu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #333;
+        min-width: 160px;
+        z-index: 1;
+      }
+
+      .submenu li {
+        float: none;
+      }
+
+      .submenu li a {
+        padding: 12px 16px;
+      }
+
+      .submenu li a:hover {
+        background-color: #575757;
+      }
+
+      /* Show submenu on hover */
+      .menu-item:hover .submenu {
+        display: block;
+      }
+
+      /* Logo styles */
+      .logo img {
+        height: 40px;
+      }
+
+      .right-menu {
+        display: flex;
+        align-items: center;
+      }
+
+      /* Container styles */
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .container h2 {
+        margin-bottom: 20px;
+      }
+
+      .container .info {
+        margin-bottom: 20px;
+      }
+
+      .container .info img {
+        max-width: 150px;
+        display: block;
+        margin-bottom: 15px;
+      }
+
+      .container .info p {
+        margin: 10px 0;
+      }
+
+      .container button {
+        padding: 10px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .container button:hover {
+        background-color: #575757;
+      }
+
+      /* Form styles */
+      .form-container {
+        margin-top: 20px;
+      }
+
+      .form-container label {
+        margin-bottom: 8px;
+      }
+
+      .form-container input,
+      .form-container select,
+      .form-container textarea {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .form-container button {
+        padding: 10px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .form-container button:hover {
+        background-color: #575757;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+      </div>
+      <ul>
+        <li><a href="search-jobs.html">Loker</a></li>
+      </ul>
+      <div class="right-menu">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li class="menu-item">
+            <a href="#">Profil</a>
+            <ul class="submenu">
+              <li><a href="settings.html">Setting</a></li>
+              <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h2>Company Information</h2>
+      <div class="info">
+        <img id="infoLogo" src="" alt="Company Logo" />
+        <p>
+          <strong>Nama Perusahaan:</strong> <span id="infoCompanyName"></span>
+        </p>
+        <p>
+          <strong>Sektor Bisnis:</strong> <span id="infoBusinessSector"></span>
+        </p>
+        <p>
+          <strong>Deskripsi Perusahaan:</strong>
+          <span id="infoCompanyDescription"></span>
+        </p>
+        <p>
+          <strong>Jumlah Karyawan:</strong>
+          <span id="infoNumberOfEmployees"></span>
+        </p>
+        <p>
+          <strong>Nomor Telepon:</strong> <span id="infoPhoneNumber"></span>
+        </p>
+        <p>
+          <strong>Website Perusahaan:</strong>
+          <a id="infoCompanyWebsite" href="" target="_blank"></a>
+        </p>
+      </div>
+
+      <div class="form-container">
+        <h3>Edit Profile</h3>
+        <form id="companyProfileForm" onsubmit="saveProfile(event)">
+          <label for="companyName">Nama Perusahaan</label>
+          <input type="text" id="companyName" name="companyName" required />
+
+          <label for="businessSector">Sektor Bisnis</label>
+          <input
+            type="text"
+            id="businessSector"
+            name="businessSector"
+            required
+          />
+          <p class="example">Contoh: Edukasi, Kesehatan, dsb.</p>
+
+          <label for="companyLogo">Logo Perusahaan</label>
+          <input
+            type="file"
+            id="companyLogo"
+            name="companyLogo"
+            accept="image/jpeg, image/png"
+            required
+          />
+          <p class="example">
+            Unggah logo dalam format JPG/JPEG/PNG dengan ukuran maksimal 2 MB.
+          </p>
+
+          <label for="companyDescription">Deskripsi Perusahaan</label>
+          <textarea
+            id="companyDescription"
+            name="companyDescription"
+            rows="4"
+            placeholder="Masukkan visi, misi, budaya kerja, dan keuntungan bekerja di perusahaan Anda."
+            required
+          ></textarea>
+
+          <label for="numberOfEmployees">Jumlah Karyawan</label>
+          <input
+            type="number"
+            id="numberOfEmployees"
+            name="numberOfEmployees"
+            required
+          />
+
+          <label for="phoneNumber">Nomor Telepon</label>
+          <input type="tel" id="phoneNumber" name="phoneNumber" required />
+
+          <label for="companyWebsite">Website Perusahaan</label>
+          <input
+            type="url"
+            id="companyWebsite"
+            name="companyWebsite"
+            required
+          />
+
+          <button type="submit">Simpan</button>
+        </form>
+      </div>
+
+      <!-- Preview section -->
+      <div id="profilePreview" class="preview">
+        <h3>Profile Preview</h3>
+        <img id="previewLogo" src="" alt="Company Logo" />
+        <p>
+          <strong>Nama Perusahaan:</strong>
+          <span id="previewCompanyName"></span>
+        </p>
+        <p>
+          <strong>Sektor Bisnis:</strong>
+          <span id="previewBusinessSector"></span>
+        </p>
+        <p>
+          <strong>Deskripsi Perusahaan:</strong>
+          <span id="previewCompanyDescription"></span>
+        </p>
+        <p>
+          <strong>Jumlah Karyawan:</strong>
+          <span id="previewNumberOfEmployees"></span>
+        </p>
+        <p>
+          <strong>Nomor Telepon:</strong> <span id="previewPhoneNumber"></span>
+        </p>
+        <p>
+          <strong>Website Perusahaan:</strong>
+          <a id="previewCompanyWebsite" href="" target="_blank"></a>
+        </p>
+      </div>
+
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (!loggedInUser || loggedInUser.role !== "company") {
+          window.location.href = "index.html";
+        } else {
+          document.getElementById("infoCompanyName").textContent =
+            loggedInUser.companyName || "N/A";
+          document.getElementById("infoBusinessSector").textContent =
+            loggedInUser.businessSector || "N/A";
+          document.getElementById("infoCompanyDescription").textContent =
+            loggedInUser.companyDescription || "N/A";
+          document.getElementById("infoNumberOfEmployees").textContent =
+            loggedInUser.numberOfEmployees || "N/A";
+          document.getElementById("infoPhoneNumber").textContent =
+            loggedInUser.phoneNumber || "N/A";
+          document.getElementById("infoCompanyWebsite").href =
+            loggedInUser.companyWebsite || "#";
+          document.getElementById("infoCompanyWebsite").textContent =
+            loggedInUser.companyWebsite || "N/A";
+
+          // Display logo if available
+          if (loggedInUser.companyLogo) {
+            document.getElementById("infoLogo").src = loggedInUser.companyLogo;
+            document.getElementById("infoLogo").style.display = "block";
+          }
+        }
+      });
+
+      function saveProfile(event) {
+        event.preventDefault(); // Prevent form submission
+
+        const companyName = document.getElementById("companyName").value;
+        const businessSector = document.getElementById("businessSector").value;
+        const companyLogo = document.getElementById("companyLogo").files[0];
+        const companyDescription =
+          document.getElementById("companyDescription").value;
+        const numberOfEmployees =
+          document.getElementById("numberOfEmployees").value;
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const companyWebsite = document.getElementById("companyWebsite").value;
+
+        // Validate file size (max 2 MB)
+        if (companyLogo && companyLogo.size > 2 * 1024 * 1024) {
+          alert(
+            "Ukuran file melebihi 2 MB. Silakan unggah file yang lebih kecil."
+          );
+          return;
+        }
+
+        // Display preview
+        document.getElementById("previewCompanyName").textContent = companyName;
+        document.getElementById("previewBusinessSector").textContent =
+          businessSector;
+        document.getElementById("previewCompanyDescription").textContent =
+          companyDescription;
+        document.getElementById("previewNumberOfEmployees").textContent =
+          numberOfEmployees;
+        document.getElementById("previewPhoneNumber").textContent = phoneNumber;
+        document.getElementById("previewCompanyWebsite").href = companyWebsite;
+        document.getElementById("previewCompanyWebsite").textContent =
+          companyWebsite;
+
+        const logoReader = new FileReader();
+        logoReader.onload = function (e) {
+          document.getElementById("previewLogo").src = e.target.result;
+          document.getElementById("previewLogo").style.display = "block";
+        };
+        if (companyLogo) {
+          logoReader.readAsDataURL(companyLogo);
+        }
+
+        // Show the preview section
+        document.getElementById("profilePreview").style.display = "block";
+
+        // Save to localStorage
+        const loggedInUser =
+          JSON.parse(localStorage.getItem("loggedInUser")) || {};
+        loggedInUser.companyName = companyName;
+        loggedInUser.businessSector = businessSector;
+        loggedInUser.companyDescription = companyDescription;
+        loggedInUser.numberOfEmployees = numberOfEmployees;
+        loggedInUser.phoneNumber = phoneNumber;
+        loggedInUser.companyWebsite = companyWebsite;
+        if (companyLogo) {
+          loggedInUser.companyLogo = URL.createObjectURL(companyLogo);
+        }
+        localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+
+        alert("Profile saved successfully!");
+      }
+
+      function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

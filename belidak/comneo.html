@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Profile</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Add your styles here */
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index.html">Dashboard</a></li>
+      <li class="active"><a href="company-profile2.html">Perusahaan Saya</a></li>
+      <li><a href="loker.html">Lowongan Saya</a></li>
+      <li><a href="kandidat-tersimpan.html">Kandidat Tersimpan</a></li>
+      <li><a href="settings.html">Pengaturan</a></li>
+      <li><a href="#" onclick="logout()">Log Out</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>Welcome Job Company <span id="companyUsername"></span></h2>
+    <p>This is your profile page</p>
+    <form id="companyProfileForm">
+      <label for="companyName">Nama Perusahaan</label>
+      <input type="text" id="companyName" name="companyName" required />
+
+      <label for="businessSector">Sektor Bisnis</label>
+      <input type="text" id="businessSector" name="businessSector" required />
+      <p class="example">Contoh: Edukasi, Kesehatan, dsb</p>
+
+      <label for="companyLogo">Logo Perusahaan</label>
+      <input type="file" id="companyLogo" name="companyLogo" accept="image/jpeg, image/png" required />
+      <p class="example">
+        Unggah logo dalam format JPG/JPEG/PNG dengan ukuran maksimal 5 MB
+      </p>
+
+      <label for="companyDescription">Deskripsi Perusahaan</label>
+      <textarea id="companyDescription" name="companyDescription" rows="4"
+        placeholder="Masukkan visi, misi, budaya kerja, dan keuntungan bekerja di perusahaan Anda." required></textarea>
+
+      <label for="numberOfEmployees">Jumlah Karyawan</label>
+      <div class="radio-container">
+        <label><input type="radio" name="numberOfEmployees" value="1-10" required /> 1-10</label>
+        <label><input type="radio" name="numberOfEmployees" value="11-50" required /> 11-50</label>
+        <label><input type="radio" name="numberOfEmployees" value="51-100" required /> 51-100</label>
+        <label><input type="radio" name="numberOfEmployees" value="101-500" required /> 101-500</label>
+        <label><input type="radio" name="numberOfEmployees" value="501-1000" required /> 501-1000</label>
+        <label><input type="radio" name="numberOfEmployees" value="1001+" required /> 1001+</label>
+      </div>
+
+      <label for="phoneNumber">Nomor Telepon</label>
+      <input type="tel" id="phoneNumber" name="phoneNumber" required />
+
+      <label for="companyWebsite">Website Perusahaan</label>
+      <input type="url" id="companyWebsite" name="companyWebsite" required />
+
+      <button type="submit">Save</button>
+    </form>
+
+    <!-- Preview section -->
+    <div id="profilePreview" class="preview">
+      <h3>Profile Preview</h3>
+      <img id="previewLogo" src="" alt="Company Logo" />
+      <p>
+        <strong>Nama Perusahaan:</strong>
+        <span id="previewCompanyName"></span>
+      </p>
+      <p>
+        <strong>Sektor Bisnis:</strong>
+        <span id="previewBusinessSector"></span>
+      </p>
+      <p>
+        <strong>Deskripsi Perusahaan:</strong>
+        <span id="previewCompanyDescription"></span>
+      </p>
+      <p>
+        <strong>Jumlah Karyawan:</strong>
+        <span id="previewNumberOfEmployees"></span>
+      </p>
+      <p>
+        <strong>Nomor Telepon:</strong> <span id="previewPhoneNumber"></span>
+      </p>
+      <p>
+        <strong>Website Perusahaan:</strong>
+        <a id="previewCompanyWebsite" href="" target="_blank"></a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('companyLogo').addEventListener('change', function () {
+      const previewLogo = document.getElementById('previewLogo');
+      const file = this.files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewLogo.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById('companyProfileForm').addEventListener('input', saveProfileToLocalStorage);
+
+    function saveProfileToLocalStorage() {
+      const formData = {
+        companyName: document.getElementById('companyName').value,
+        businessSector: document.getElementById('businessSector').value,
+        companyDescription: document.getElementById('companyDescription').value,
+        numberOfEmployees: document.querySelector('input[name="numberOfEmployees"]:checked') ? document.querySelector('input[name="numberOfEmployees"]:checked').value : '',
+        phoneNumber: document.getElementById('phoneNumber').value,
+        companyWebsite: document.getElementById('companyWebsite').value
+      };
+
+      localStorage.setItem('companyProfile', JSON.stringify(formData));
+      showProfilePreview(formData);
+    }
+
+    function loadProfileFromLocalStorage() {
+      const savedProfile = localStorage.getItem('companyProfile');
+      if (savedProfile) {
+        const formData = JSON.parse(savedProfile);
+        document.getElementById('companyName').value = formData.companyName;
+        document.getElementById('businessSector').value = formData.businessSector;
+        document.getElementById('companyDescription').value = formData.companyDescription;
+        if (formData.numberOfEmployees) {
+          document.querySelector(`input[name="numberOfEmployees"][value="${formData.numberOfEmployees}"]`).checked = true;
+        }
+        document.getElementById('phoneNumber').value = formData.phoneNumber;
+        document.getElementById('companyWebsite').value = formData.companyWebsite;
+
+        showProfilePreview(formData);
+      }
+    }
+
+    function showProfilePreview(formData) {
+      document.getElementById('previewCompanyName').textContent = formData.companyName;
+      document.getElementById('previewBusinessSector').textContent = formData.businessSector;
+      document.getElementById('previewCompanyDescription').textContent = formData.companyDescription;
+      document.getElementById('previewNumberOfEmployees').textContent = formData.numberOfEmployees;
+      document.getElementById('previewPhoneNumber').textContent = formData.phoneNumber;
+      document.getElementById('previewCompanyWebsite').textContent = formData.companyWebsite;
+      document.getElementById('previewCompanyWebsite').href = formData.companyWebsite;
+      document.getElementById('profilePreview').style.display = 'block';
+    }
+
+    window.onload = loadProfileFromLocalStorage;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+/* Styles for radio buttons */
+.radio-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.radio-container label {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.radio-container input[type="radio"] {
+  margin-right: 8px;
+}

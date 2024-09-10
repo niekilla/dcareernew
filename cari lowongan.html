@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Lowongan Kerja</title>
+    <link rel="icon" type="image/png" href="img/wgo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome CDN -->
+    <style>
+        /* General styling */
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+            height: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure the navbar is on top */
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar li a:hover {
+            background-color: #575757;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-top: 5px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            background-color: #f4f4f4;
+            padding: 20px;
+            width: 200px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 70px); /* Full height minus navbar height */
+            position: fixed;
+            top: 70px; /* Align with navbar bottom */
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu li a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        /* Search Container styles */
+        .search-container {
+            max-width: 1200px; /* Full width minus sidebar width */
+            margin: 90px auto 10px auto; /* Adjust top margin to below navbar, bottom margin to align with job list */
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Search Container input */
+        .search-container input {
+            width: calc(100% - 120px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        /* Search Container button */
+        .search-container button {
+            padding: 10px;
+            background-color: dodgerblue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100px;
+        }
+
+        .search-container button:hover {
+            background-color: cadetblue;
+        }
+
+        /* Job List styles */
+        .job-list {
+            max-width: calc(100% - 220px); /* Full width minus sidebar width */
+            margin: 10px 20px 20px 250px; /* Adjust top margin to align with search container */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 150px); /* Full height minus navbar and search container */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .job-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            position: relative;
+        }
+
+        .job-item h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .job-item p {
+            margin: 2px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Save icon styles */
+        .save-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #999;
+        }
+
+        .save-icon:hover {
+            color: dodgerblue;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+        </div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="index.html" onclick="logout()">Log Out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="cari lowongan.html">Cari Lowongan</a></li>
+            <li><a href="lowongan jobseeker.html">Back</a></li>
+        </ul>
+    </div>
+
+    <!-- Search Container -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Cari lowongan...">
+        <button onclick="searchJobs()">Cari</button>
+    </div>
+
+    <!-- Job List -->
+    <div class="job-list" id="jobList"></div>
+
+    <script>
+        function searchJobs() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const jobList = document.getElementById('jobList');
+            jobList.innerHTML = '';
+
+            const allJobs = JSON.parse(localStorage.getItem('jobs')) || [];
+
+            const filteredJobs = allJobs.filter(job =>
+                job.jobTitle.toLowerCase().includes(searchQuery) ||
+                job.jobPosition.toLowerCase().includes(searchQuery) ||
+                job.jobType.toLowerCase().includes(searchQuery) ||
+                job.jobLocation.toLowerCase().includes(searchQuery)
+            );
+
+            if (filteredJobs.length === 0) {
+                jobList.innerHTML = '<p>No jobs found.</p>';
+                return;
+            }
+
+            filteredJobs.forEach(job => {
+                const jobItem = document.createElement('div');
+                jobItem.classList.add('job-item');
+                jobItem.innerHTML = `
+                    <span class="save-icon" onclick="saveJob('${job.jobTitle}', '${job.jobPosition}', '${job.jobType}', '${job.candidatesNeeded}', '${job.jobLocation}', '${job.salaryMin}', '${job.salaryMax}', '${job.jobActiveUntil}')">
+                        <i class="fas fa-save"></i>
+                    </span>
+                    <h3>${job.jobTitle}</h3>
+                    <p><strong>Posisi:</strong> ${job.jobPosition}</p>
+                    <p><strong>Tipe Pekerjaan:</strong> ${job.jobType}</p>
+                    <p><strong>Kandidat Yang Dibutuhkan:</strong> ${job.candidatesNeeded}</p>
+                    <p><strong>Lokasi:</strong> ${job.jobLocation}</p>
+                    <p><strong>Rentang Gaji:</strong> ${job.salaryMin} - ${job.salaryMax}</p>
+                    <p><strong>Aktif Hingga:</strong> ${job.jobActiveUntil}</p>
+                `;
+                jobList.appendChild(jobItem);
+            });
+        }
+
+        function saveJob(title, position, type, candidates, location, salaryMin, salaryMax, activeUntil) {
+            // Save job to localStorage or perform other save actions
+            const savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+            const jobExists = savedJobs.some(job => job.title === title && job.position === position);
+
+            if (!jobExists) {
+                savedJobs.push({title, position, type, candidates, location, salaryMin, salaryMax, activeUntil});
+                localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+                alert('Job saved!');
+            } else {
+                alert('Job already saved!');
+            }
+        }
+    </script>
+</body>
+
+</html>

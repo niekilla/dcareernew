@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link rel="icon" type="image/png" href="img/wgo.png">
+  <link rel="stylesheet" href="css/css_register.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h2>Register</h2>
+    <form>
+      <input type="text" id="regUsername" placeholder="Username" required />
+      <input type="password" id="regPassword" placeholder="Password" required />
+      <input type="email" id="regEmail" placeholder="Email" required />
+      <input type="no" id="regNo" placeholder="No HP" required />
+      <select id="regRole" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="jobseeker">Job Seeker</option>
+        <option value="company">Company</option>
+      </select>
+      <button type="button" onclick="register()">Register</button>
+    </form>
+    <div>
+      <p>
+        Already have an account?
+        <a href="index.html#bagian-login">Login here</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="scripts/scripts_reg_in_out.js"></script>
+</body>
+
+</html>

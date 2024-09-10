@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DCareer | Login</title>
+  <link rel="icon" type="image/png" href="img/wgo.png">
+  <link rel="stylesheet" href="css/css_navbar.css" />
+  <link rel="stylesheet" href="css/css_banner.css" />
+  <link rel="stylesheet" href="css/css_login.css" />
+  <link rel="stylesheet" href="css/css_contact.css" />
+  <link rel="stylesheet" href="css/css_footer.css" />
+  <link rel="stylesheet" href="css/css_about.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style> -->
+</head>
+
+<body>
+  <!-- INI BAGIAN NAVBAR ATAS -->
+  <div class="navbar">
+    <div class="left-nav">
+      <div class="logo">
+        <img src="img/logo.png" alt="Logo Website" />
+      </div>
+      <div class="nav-links-left">
+        <a href="index.html">Beranda</a>
+        <a href="job.html#bagian-job">Job</a>
+        <a href="about.html#bagian-about">About</a>
+      </div>
+    </div>
+
+    <div class="right-nav">
+      <a href="login.html#bagian-login">Login</a>
+      <a href="contact.html#bagian-contact">Contact</a>
+    </div>
+  </div>
+
+  <!-- INI BAGIAN BANNER BIRU -->
+  <div class="banner">
+    <div class="banner-content">
+      <h1>Welcome to Our Website</h1>
+      <p>
+        Online Job Vacancy information
+      </p>
+      <a href="#Job" class="btn">Find Job</a>
+    </div>
+  </div>
+
+  <!-- INI BAGIAN ABOUT -->
+  <section id="bagian-about" style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;">
+    <div class="about-container">
+      <h2>Mission</h2>
+      <p>
+        To connect job seekers with their dream careers and empower employers to find the best talent.
+      </p>
+      <!--img src="img/mission.png" alt="Our Mission" /-->
+    </div>
+    <div class="about-container">
+      <h2>Vision</h2>
+      <p>
+        To be the leading job search platform, connecting millions of job seekers with their ideal careers and
+        empowering employers to build their dream teams.
+      </p>
+      <!--img src="img/vision.png" alt="Our Vision" /-->
+    </div>
+    <div class="about-container">
+      <h2>Values</h2>
+      <p>
+        We value integrity, innovation, and customer satisfaction in
+        everything we do.
+      </p>
+      <!--img src="img/values.png" alt="Our Values" /-->
+    </div>
+  </section>
+
+  <!-- INI BAGIAN LOGIN -->
+  <section id="bagian-login" style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      ">
+    <!-- SECTION ID UTK TAMPILAN AUTO FOKUS KE BAGIAN LOGIN | SECTION STYLE UTK FORM LOGIN POSISI TENGAH-->
+    <div class="container">
+      <h2>Login</h2>
+      <form>
+        <input type="text" id="loginUsername" placeholder="Username" required />
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <select id="loginRole" required>
+          <option value="" disabled selected>Select Role</option>
+          <option value="jobseeker">Job Seeker</option>
+          <option value="company">Company</option>
+        </select>
+        <button type="button" onclick="login()">Login</button>
+      </form>
+
+      <div>
+        <p>Forgot Password? <i><a href="reset-password.html" style="color:inherit; text-decoration: none;">Reset
+              here</a>
+        </p>
+        </i>
+        <p>Don't have an account? <i><a href="register.html" style="color:inherit; text-decoration: none;">Register
+              here</a></p>
+        </i>
+        <a href="user-list.html" style="color:inherit;">View User List</a>
+      </div>
+    </div>
+    <script src="scripts/scripts_reg_in_out.js"></script>
+  </section>
+
+  <!-- INI BAGIAN CONTACT -->
+  <section id="bagian-contact" style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              padding: 50px;
+              background-color: rgb(255, 254, 254);
+            ">
+    <h2>Contact Us</h2>
+    <!-- SECTION ID UTK TAMPILAN AUTO FOKUS KE BAGIAN CONTACT | SECTION STYLE UTK FORM CONTACT POSISI TENGAH-->
+    <div class="form-container">
+      <div class="left">
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="Name" />
+
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="Email" />
+
+        <label for="phone">Phone</label>
+        <input type="tel" name="phone" placeholder="Phone" />
+
+        <label for="message">Message</label>
+        <textarea name="message" placeholder="Message"></textarea>
+
+        <div class="submit-btn">
+          <button type="submit">Send</button>
+        </div>
+      </div>
+
+      <div class="right">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.816531825121!2d109.34420101043264!3d-0.05425099994497571!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e1d599622b58947%3A0x209695fee6b07761!2sPoliteknik%20Negeri%20Pontianak!5e0!3m2!1sid!2sid!4v1722240200745!5m2!1sid!2sid"
+          width="450" height="400" style="border: 0px; margin-top: 10px" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade""></iframe>       
+            </div>
+          </div>
+        </section>
+
+  <!-- INI BAGIAN FOOTER -->
+  <footer class=" footer">
+          <div style="margin-left: -100px;">
+            <h4>Web Career at DCareer</h4>
+            <p>Jelajahi peluang menarik di dunia karier web dengan DCareer.</p>
+          </div>
+
+          <div style="margin-left: 10px;">
+            <h4 style="margin-left: 40px;">Contact Info</h4>
+            <ul style="list-style-type: none;">
+              <li><i class="fab fa-facebook"></i><a href="https://www.facebook.com/" target="_blank"
+                  style="color:inherit; text-decoration: none;"> Facebook</a>
+              </li>
+              <li><i class="fab fa-instagram"></i><a href="https://www.instagram.com/" target="_blank"
+                  style="color:inherit; text-decoration: none;"> Instagram</a></li>
+              <li><i class="fa fa-phone"></i> +123 456 7890</li>
+              <li><i class="fa fa-envelope"></i> Dcareer@gmail.com</li>
+            </ul>
+          </div>
+          </footer>
+
+          <script src="scripts/javascript.js"></script>
+          <script src="scripts/scripts_contacts.js"></script>
+          <script src="login.js"></script>
+</body>
+
+</html>

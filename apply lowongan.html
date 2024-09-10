@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Job</title>
+    <link rel="icon" type="image/png" href="img/wgo.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 3px;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            background-color: #f44336;
+            /* Red color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 10px 20px;
+        }
+
+        .back-button:hover {
+            background-color: #e53935;
+        }
+
+        .example {
+            margin-top: 2px;
+            font-size: 0.9em;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Apply for Job</h1>
+        <div id="job-info">
+            <!-- Job information will be displayed here -->
+        </div>
+        <form id="application-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="cv">CV/Resume:</label>
+                <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                <p class="example">CV hanya format .pdf, .doc, .docx</p>
+            </div>
+            <div class="form-group">
+                <label for="coverLetter">Cover Letter:</label>
+                <textarea id="coverLetter" name="coverLetter" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="identity">Identity Card:</label>
+                <input type="file" id="identity" name="identity" accept=".pdf,.jpg,.jpeg,.png" required>
+                <p class="example">CV hanya format .pdf, .jpg, .jpeg, .png</p>
+            </div>
+            <div class="form-group">
+                <label for="skck">SKCK:</label>
+                <input type="file" id="skck" name="skck" accept=".pdf,.jpg,.jpeg,.png" required>
+                <p class="example">CV hanya format .pdf, .doc, .docx</p>
+            </div>
+            <div class="form-group">
+                <label for="photo">Passport Photo:</label>
+                <input type="file" id="photo" name="photo" accept=".jpg,.jpeg,.png" required>
+                <p class="example">CV hanya format .jpg, .jpeg, .png</p>
+            </div>
+            <div class="form-group">
+                <label for="transcript">Transcript:</label>
+                <input type="file" id="transcript" name="transcript" accept=".pdf,.jpg,.jpeg,.png" required>
+                <p class="example">CV hanya format .pdf, .jpg, .jpeg, .png</p>
+            </div>
+            <div class="form-group">
+                <label for="certifications">Certifications:</label>
+                <input type="file" id="certifications" name="certifications" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                <p class="example">CV hanya format .pdf, .jpg, .jpeg, .png</p>
+            </div>
+            <div class="form-group">
+                <label for="portfolio">Portfolio:</label>
+                <input type="file" id="portfolio" name="portfolio" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                <p class="example">CV hanya format .pdf, .jpg, .jpeg, .png</p>
+            </div>
+            <div class="form-group">
+                <label for="workCertificate">Work Certificate:</label>
+                <input type="file" id="workCertificate" name="workCertificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                <p class="example">CV hanya format .pdf, .jpg, .jpeg, .png</p>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit Application</button>
+                <button type="button" class="back-button" onclick="goBack()">Back</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        const jobTitle = getQueryParameter('job');
+
+        if (jobTitle) {
+            document.getElementById('job-info').innerHTML = `<h2>Apply for: ${jobTitle}</h2>`;
+        } else {
+            document.getElementById('job-info').innerHTML = '<p>No job specified.</p>';
+        }
+
+        document.getElementById('application-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            // Simulate uploading files and getting URLs (adjust according to your file upload handling)
+            const fileUrls = {};
+            formData.forEach((value, key) => {
+                if (value instanceof File) {
+                    fileUrls[key] = URL.createObjectURL(value);
+                } else {
+                    fileUrls[key] = value;
+                }
+            });
+
+            // Get applicant details
+            const applicant = {
+                name: fileUrls.name,
+                cv: fileUrls.cv,
+                coverLetter: fileUrls.coverLetter,
+                identity: fileUrls.identity,
+                skck: fileUrls.skck,
+                photo: fileUrls.photo,
+                transcript: fileUrls.transcript,
+                certifications: fileUrls.certifications,
+                portfolio: fileUrls.portfolio,
+                workCertificate: fileUrls.workCertificate,
+                position: jobTitle // Add the job title here
+            };
+
+            // Save to localStorage
+            let applicants = JSON.parse(localStorage.getItem('applicants')) || [];
+            applicants.push(applicant);
+            localStorage.setItem('applicants', JSON.stringify(applicants));
+
+            alert('Application submitted successfully!');
+            window.location.href = 'lowongan jobseeker.html';
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>

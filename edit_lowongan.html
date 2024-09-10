@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Lowongan</title>
+  <link rel="icon" type="image/png" href="img/wgo.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 1000px;
+    }
+
+    .navbar .logo a:last-child {
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .navbar {
+      background-color: black;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 50px;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .navbar li {
+      position: relative;
+    }
+
+    .navbar li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar li a:hover {
+      background-color: #575757;
+    }
+
+    .kiri {
+      margin-left:
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 1px;
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+    }
+
+    .container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container label {
+      margin-bottom: 8px;
+    }
+
+    .container input,
+    .container select,
+    .container textarea {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .container .form-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .container button {
+      padding: 8px;
+      background-color: dodgerblue;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100px;
+    }
+
+    .container button:hover {
+      background-color: cadetblue;
+    }
+
+    .example {
+      color: gray;
+      font-size: 0.8em;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .notification {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: dodgerblue;
+      color: white;
+      padding: 15px;
+      border-radius: 4px;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .notification.show {
+      display: block;
+    }
+
+
+    .salary-range {
+      display: flex;
+      align-items: center;
+    }
+
+    .salary-range input {
+      margin-right: 10px;
+    }
+
+    .salary-separator {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar" style="padding-top:5px;">
+    <div class="logo">
+      <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+    </div>
+  </nav>
+
+  <div id="notification" class="notification">Data Lowongan Tersimpan!</div>
+
+  <div class="container">
+    <h2>Edit Lowongan</h2>
+    <form id="editJobForm" onsubmit="saveEditedJob(event)">
+      <label for="jobTitle">Judul Lowongan</label>
+      <input type="text" id="jobTitle" name="jobTitle" required>
+
+      <label for="jobPosition">Posisi</label>
+      <select id="jobPosition" name="jobPosition" required>
+        <option value=""></option>
+        <option value="Developer">Developer</option>
+        <option value="Designer">Designer</option>
+        <option value="Project Manager">Project Manager</option>
+        <option value="Tester">Tester</option>
+      </select>
+
+      <label>Tipe Pekerjaan</label>
+      <label><input type="radio" name="jobType" value="Full-Time" required> Full-Time</label>
+      <label><input type="radio" name="jobType" value="Part-Time"> Part-Time</label>
+      <label><input type="radio" name="jobType" value="Internship"> Internship</label>
+
+      <label for="candidatesNeeded">Kandidat yang Dibutuhkan</label>
+      <input type="number" id="candidatesNeeded" name="candidatesNeeded" required>
+      <p class="example">Contoh: 1, dst</p>
+
+      <label for="jobActiveUntil">Aktif Hingga</label>
+      <input type="date" id="jobActiveUntil" name="jobActiveUntil" required>
+
+      <label for="jobLocation">Lokasi</label>
+      <select id="jobLocation" name="jobLocation" required>
+        <option value=""></option>
+        <option value="Kota Pontianak">Kota Pontianak</option>
+        <option value=" KotaSintang">Kota Sintang</option>
+        <option value="Kota Melawi">Kota Melawi</option>
+        <option value="Kota Sambas">Kota Sambas</option>
+        <option value="Kota Singkawang">Kota Singkawang</option>
+        <option value="Kota Ketapang">Kota Ketapang</option>
+      </select>
+
+      <label for="jobDescription">Deskripsi Pekerjaan</label>
+      <textarea id="jobDescription" name="jobDescription" rows="10" required></textarea>
+      <p class="example">Contoh : Sebagai [Posisi Lowongan], Anda akan berpartisipasi dalam proses pembangunan aplikasi
+        yang sedang dibangun di dalam perusahaan [Nama Perusahaan]. Anda juga diharapkan mampu bekerja di dalam tim.</p>
+
+      <label for="salaryRange">Rentang Gaji</label>
+      <div class="salary-range">
+        <input type="text" id="salaryMin" name="salaryMin" placeholder="Contoh: Rp.5.000.000"
+          oninput="formatRupiah(this)" required>
+        <span class="salary-separator">-</span>
+        <input type="text" id="salaryMax" name="salaryMax" placeholder="Opsional" oninput="formatRupiah(this)">
+      </div>
+
+      <label>Pengalaman Kerja</label>
+      <label><input type="radio" name="experience" value="1 tahun" required>
+        < 1 tahun</label>
+          <label><input type="radio" name="experience" value="5 tahun">
+            < 5 tahun</label>
+              <label><input type="radio" name="experience" value="10 tahun">
+                < 10 tahun</label>
+                  <label><input type="radio" name="experience" value=">10 tahun"> > 10 tahun</label>
+
+                  <label for="contactInfo">Kontak</label>
+                  <input type="tel" id="contactInfo" name="contactInfo" required>
+
+                  <div class="form-buttons">
+                    <button type="submit">Simpan</button>
+                    <button type="button" onclick="navigateToPreview()">Pratinjau</button>
+                  </div>
+    </form>
+  </div>
+
+  <script>
+    function formatRupiah(input) {
+      let value = input.value.replace(/\D/g, '');
+      value = new Intl.NumberFormat('id-ID').format(value);
+      input.value = value;
+    }
+
+    function saveEditedJob(event) {
+      event.preventDefault();
+
+      const jobData = {
+        jobTitle: document.getElementById('jobTitle').value,
+        jobPosition: document.getElementById('jobPosition').value,
+        jobType: document.querySelector('input[name="jobType"]:checked').value,
+        candidatesNeeded: document.getElementById('candidatesNeeded').value,
+        jobActiveUntil: document.getElementById('jobActiveUntil').value,
+        jobLocation: document.getElementById('jobLocation').value,
+        jobDescription: document.getElementById('jobDescription').value,
+        salaryMin: document.getElementById('salaryMin').value,
+        salaryMax: document.getElementById('salaryMax').value,
+        experience: document.querySelector('input[name="experience"]:checked').value,
+        contactInfo: document.getElementById('contactInfo').value,
+      };
+
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      const editJob = JSON.parse(localStorage.getItem('editJob'));
+      const jobIndex = jobs.findIndex(job => job.jobTitle === editJob.jobTitle);
+
+      if (jobIndex !== -1) {
+        jobs[jobIndex] = jobData;
+        localStorage.setItem('jobs', JSON.stringify(jobs));
+        showNotification('Data Lowongan Tersimpan!');
+      }
+    }
+
+    function showNotification(message) {
+      console.log("Notifikasi Dipanggil: " + message);
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+
+    function navigateToPreview() {
+      saveEditedJob(new Event('submit')); // Save the job data before navigating
+
+      const jobData = {
+        jobTitle: document.getElementById('jobTitle').value,
+        jobPosition: document.getElementById('jobPosition').value,
+        jobType: document.querySelector('input[name="jobType"]:checked').value,
+        candidatesNeeded: document.getElementById('candidatesNeeded').value,
+        jobActiveUntil: document.getElementById('jobActiveUntil').value,
+        jobLocation: document.getElementById('jobLocation').value,
+        jobDescription: document.getElementById('jobDescription').value,
+        salaryMin: document.getElementById('salaryMin').value,
+        salaryMax: document.getElementById('salaryMax').value,
+        experience: document.querySelector('input[name="experience"]:checked').value,
+        contactInfo: document.getElementById('contactInfo').value,
+      };
+
+      localStorage.setItem('editJob', JSON.stringify(jobData));
+      window.location.href = 'Pratinjau.html';
+    }
+
+    function populateForm() {
+      const editJob = JSON.parse(localStorage.getItem('editJob'));
+      if (editJob) {
+        document.getElementById('jobTitle').value = editJob.jobTitle;
+        document.getElementById('jobPosition').value = editJob.jobPosition;
+        document.querySelector(`input[name="jobType"][value="${editJob.jobType}"]`).checked = true;
+        document.getElementById('candidatesNeeded').value = editJob.candidatesNeeded;
+        document.getElementById('jobActiveUntil').value = editJob.jobActiveUntil;
+        document.getElementById('jobLocation').value = editJob.jobLocation;
+        document.getElementById('jobDescription').value = editJob.jobDescription;
+        document.getElementById('salaryMin').value = editJob.salaryMin;
+        document.getElementById('salaryMax').value = editJob.salaryMax;
+        document.querySelector(`input[name="experience"][value="${editJob.experience}"]`).checked = true;
+        document.getElementById('contactInfo').value = editJob.contactInfo;
+      }
+    }
+
+    window.onload = populateForm;
+  </script>
+</body>
+
+</html>

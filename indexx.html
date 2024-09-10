@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+        }
+
+        .job-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-item h3 {
+            margin-top: 0;
+        }
+
+        .job-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="indexx.html">Dashboard</a>
+        <a href="LowonganSaya.html">Lowongan Saya</a>
+    </div>
+
+    <div class="container">
+        <h2>Lamaran Masuk</h2>
+        <div id="applicationsList"></div>
+    </div>
+
+    <script>
+        // Load applications from localStorage
+        function loadApplications() {
+            const applications = JSON.parse(localStorage.getItem('applications')) || [];
+            const applicationsList = document.getElementById('applicationsList');
+            applicationsList.innerHTML = '';
+
+            if (applications.length === 0) {
+                applicationsList.innerHTML = '<p>Tidak ada lamaran yang masuk.</p>';
+                return;
+            }
+
+            applications.forEach(application => {
+                const jobItem = document.createElement('div');
+                jobItem.classList.add('job-item');
+                jobItem.innerHTML = `
+                    <h3>${application.jobTitle}</h3>
+                    <p><strong>Posisi:</strong> ${application.jobPosition}</p>
+                    <p><strong>Tipe Pekerjaan:</strong> ${application.jobType}</p>
+                    <p><strong>Lokasi:</strong> ${application.jobLocation}</p>
+                    <p><strong>Rentang Gaji:</strong> ${application.salaryMin} - ${application.salaryMax}</p>
+                    <p><strong>Kandidat Dibutuhkan:</strong> ${application.candidatesNeeded}</p>
+                    <p><strong>Pengalaman Kerja:</strong> ${application.experience}</p>
+                    <p><strong>Aktif Hingga:</strong> ${application.jobActiveUntil}</p>
+                `;
+                applicationsList.appendChild(jobItem);
+            });
+        }
+
+        // Load applications on page load
+        window.onload = loadApplications;
+    </script>
+</body>
+
+</html>

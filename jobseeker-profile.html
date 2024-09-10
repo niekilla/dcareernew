@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobseeker Profile</title>
+  <link rel="icon" type="image/png" href="img/wgo.png">
+  <link rel="stylesheet" href="bebek/styles.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* General styles for the navbar */
+    .navbar {
+
+      background-color: #000;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 70px;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .navbar li {
+      position: relative;
+    }
+
+    .navbar li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar li a:hover {
+      background-color: #575757;
+    }
+
+    /* Submenu styles */
+    .submenu {
+
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #333;
+      min-width: 160px;
+      z-index: 1;
+
+    }
+
+    .submenu li {
+      float: none;
+    }
+
+    .submenu li a {
+      padding: 12px 16px;
+    }
+
+    .submenu li a:hover {
+      background-color: #575757;
+    }
+
+    /* Show submenu on hover */
+    .menu-item:hover .submenu {
+      display: block;
+    }
+
+    /* Logo styles */
+    .logo img {
+      height: 40px;
+      margin-top: 5px;
+    }
+
+    .delete-icon {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    /* Notification icon styles */
+    .notification-icon {
+      position: absolute;
+      /* Absolute positioning */
+      top: 10px;
+      /* Distance from the top */
+      left: 1200px;
+      /* Distance from the left */
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .notification-icon img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .notification-dropdown {
+      position: absolute;
+      top: 50px;
+      /* Position below the icon */
+      right: 0;
+      /* Align to the right of the icon */
+      background-color: #fff;
+      border: 3px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 250px;
+      /* Set a fixed width */
+      max-height: 400px;
+      /* Set a max-height */
+      overflow-y: auto;
+      /* Scroll if too many notifications */
+      z-index: 100;
+      display: none;
+      /* Hidden by default */
+      /* Optional: add border-radius for rounded corners */
+      border-radius: 10px;
+    }
+
+    .notification-dropdown.show {
+      display: block;
+      /* Show when the class is added */
+    }
+
+    .notification-dropdown ul {
+      list-style-type: none;
+      /* Remove bullet points */
+      padding: 0;
+      margin: 0;
+      display: flex;
+      /* Stack items vertically */
+      flex-direction: column;
+      /* Ensure items stack vertically */
+    }
+
+    .notification-dropdown li {
+      border-bottom: 1px solid #ddd;
+      /* Add a border between items */
+      padding: 10px;
+      /* Add some padding for spacing */
+    }
+
+    .notification-dropdown li a {
+      text-decoration: none;
+      /* Remove underline */
+      color: #333;
+      /* Text color */
+      display: block;
+      /* Ensure links fill their container */
+    }
+
+    .notification-dropdown li a:hover {
+      background-color: #f5f5f5;
+      /* Change background on hover */
+    }
+
+
+    .right-menu {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      background-color: #f4f4f4;
+      padding: 20px;
+      width: 200px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      margin-top: 11.9px;
+      height: calc(100% - 50px);
+      position: fixed;
+      top: 50px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      /* margin-top: 2.6cqmin; */
+    }
+
+    .sidebar-menu {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar-menu li a {
+      text-decoration: none;
+      color: #333;
+      padding: 10px 20px;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .sidebar-menu li a:hover,
+    .sidebar-menu li a.active {
+      background-color: dodgerblue;
+      color: white;
+    }
+
+    /* Container styles */
+    .container {
+      margin-left: 250px;
+      /* Adjusted to align closer to the sidebar */
+      padding: 30px;
+      width: calc(100% - 220px);
+      /* Adjust width according to the sidebar width */
+      overflow-y: auto;
+      height: calc(100% - 50px);
+      margin-top: 10px;
+      background-color: #fff;
+      /* White background for the container */
+      border: 5px solid #ddd;
+      /* Light gray border */
+      border-radius: 10px;
+      /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow */
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+    }
+
+    .container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container label {
+      margin-bottom: 8px;
+    }
+
+    .container input,
+    .container select,
+    .container textarea {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .container textarea {
+      height: 150px;
+      /* Adjusted height for larger text area */
+    }
+
+    .btnsave {
+      padding: 10px;
+      /* margin-left: 1px; */
+    }
+
+    .container button {
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+    }
+
+    .container button:hover {
+      background-color: #007bff;
+    }
+
+    .warning,
+    .example {
+      font-size: 0.9em;
+      color: red;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+
+    .example {
+      color: #333;
+    }
+
+    /* Preview styles */
+    .preview {
+
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .preview h3 {
+      margin-top: 0;
+    }
+
+    .preview img {
+      max-width: 150px;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    /* Radio button styles */
+    .radio-container label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .cv-preview {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cv-preview iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+
+    .cv-preview a {
+      display: block;
+      margin-top: 10px;
+      color: dodgerblue;
+      text-decoration: none;
+    }
+
+    .cv-preview a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+    </div>
+    <div class="right-menu">
+      <ul>
+        <!-- Navbar items -->
+      </ul>
+      <div class="notification-icon" onclick="toggleNotifications()">
+        <img src="img/icon notifikasi.png" alt="Notifications">
+        <div class="notification-count" id="notificationCount">0</div>
+      </div>
+      <div class="notification-dropdown" id="notificationDropdown">
+        <ul id="notificationList">
+          <!-- Notifications will be inserted here -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar">
+    <ul class="sidebar-menu">
+      <li class="active"><a href="jobseeker-profile.html">Profil Jobseeker</a></li>
+      <li><a href="lowongan jobseeker.html">Lowongan</a></li>
+      <li><a href="pengaturan-profile.html">Pengaturan</a></li>
+      <li><a href="index.html" onclick="logout()">Log Out</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <h1>Jobseeker Profile</h1>
+    <div id="profileInfo">
+      <p id="profileName">Nama: Tidak tersedia</p>
+      <p id="profileEmail">Email: Tidak tersedia</p>
+      <p id="profilePhone">Telepon: Tidak tersedia</p>
+      <p id="profileNim">NIM: Tidak tersedia</p>
+      <p id="profileStatus">Status: Tidak tersedia</p>
+      <p id="profilePhoto">Foto: Tidak tersedia</p>
+      <p id="profileCv">CV: Tidak tersedia</p>
+      <!-- <p id="profileCv">
+        CV:
+        <a id="cvLink" href="view-cv.html" onclick="viewCv()">Download CV</a>
+      </p> -->
+    </div>
+
+    <button id="editProfile" onclick="editProfile()">Edit Profil</button>
+    <button id="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <script src="jobseeker-profile.js"></script>
+  <script>
+      function viewCv() {
+          const cvUrl = localStorage.getItem('cvUrl');
+          if (cvUrl) {
+              window.location.href = `view-cv.html?cvUrl=${encodeURIComponent(cvUrl)}`;
+          } else {
+              alert('CV not found.');
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+          const cvUrl = localStorage.getItem('cvUrl');
+          if (cvUrl) {
+              document.getElementById('cvLink').href = `view-cv.html?cvUrl=${encodeURIComponent(cvUrl)}`;
+          }
+          loadNotifications();
+      });
+
+      function toggleNotifications() {
+          var dropdown = document.getElementById('notificationDropdown');
+          dropdown.classList.toggle('show');
+      }
+
+      function loadNotifications() {
+          const notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+          const notificationList = document.getElementById('notificationList');
+          const notificationCount = document.getElementById('notificationCount');
+
+          notificationList.innerHTML = '';
+          notificationCount.textContent = notifications.length;
+
+          notifications.forEach((notification, index) => {
+              const listItem = document.createElement('li');
+              const link = document.createElement('a');
+              link.href = '#';
+              link.textContent = notification.message;
+
+              const deleteIcon = document.createElement('img');
+              deleteIcon.src = 'img/trash icon.png'; // Path to your delete icon
+              deleteIcon.className = 'delete-icon';
+              deleteIcon.onclick = () => removeNotification(index);
+
+              listItem.appendChild(link);
+              listItem.appendChild(deleteIcon);
+              notificationList.appendChild(listItem);
+          });
+      }
+
+      function removeNotification(index) {
+          let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+          notifications.splice(index, 1);
+          localStorage.setItem("notifications", JSON.stringify(notifications));
+          loadNotifications();
+      }
+
+      function logout() {
+          // Your logout logic here
+      }
+  </script>
+
+</body>
+
+</html>

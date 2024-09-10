@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pelamar</title>
+    <link rel="icon" type="image/png" href="img/wgo.png">
+    <style>
+        /* Style yang sama seperti sebelumnya */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+            height: 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar li a:hover {
+            background-color: #575757;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .submenu li {
+            float: none;
+        }
+
+        .submenu li a {
+            padding: 12px 16px;
+        }
+
+        .submenu li a:hover {
+            background-color: #575757;
+        }
+
+        .menu-item:hover .submenu {
+            display: block;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .right-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar {
+            background-color: white;
+            padding: 20px;
+            width: 200px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: calc(100% - 50px);
+            position: fixed;
+            top: 50px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu li a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .sidebar-menu li a:hover {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .sidebar-menu li a.active {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .container {
+            margin-left: 250px;
+            padding: 2px;
+            width: calc(100% - 500px);
+            overflow-y: auto;
+            height: calc(100% - 50px);
+            margin-top: 10px;
+            padding-top: 60px;
+            /* Adjusted for the fixed navbar */
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .search-container button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            background-color: dodgerblue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: cadetblue;
+        }
+
+        .applicant-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+        }
+
+        .applicant-list li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            gap: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .applicant-info {
+            width: 100%;
+        }
+
+        .applicant-actions {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .accept-btn,
+        .reject-btn {
+            width: 20%;
+            padding: 3px 5px;
+            margin: 0 80px;
+        }
+
+        .accept-btn {
+            background-color: dodgerblue;
+            /* Blue */
+        }
+
+        .reject-btn {
+            background-color: #f44336;
+            /* Red */
+        }
+
+        .accept-btn:hover {
+            background-color: cadetblue;
+        }
+
+        .reject-btn:hover {
+            background-color: #e73536;
+        }
+
+        .accepted {
+            background-color: #d4edda;
+        }
+
+        .rejected {
+            background-color: #f8d7da;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal img {
+            max-width: 80%;
+            max-height: 80%;
+            margin: auto;
+            display: block;
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+        </div>
+        <div class="right-menu">
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="profil.html">Profil Perusahaan</a></li>
+            <li><a href="kandidat.html">Kandidat Tersedia</a></li>
+            <li><a href="loker.html">Buat Lowongan</a></li>
+            <li class="active"><a href="company-dashboard.html">Pengaturan</a></li>
+            <li><a href="index.html" onclick="logout()">Log Out</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h2>Daftar Nama Kandidat</h2>
+
+        <!-- Search Container -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Cari nama pelamar...">
+            <button onclick="searchApplicants()">Cari</button>
+        </div>
+
+        <ul id="applicantList" class="applicant-list">
+            <!-- Applicant items will be dynamically inserted here -->
+        </ul>
+    </div>
+
+    <script>
+        function loadApplicants() {
+            const applicants = JSON.parse(localStorage.getItem("applicants")) || [];
+            displayApplicants(applicants);
+        }
+
+        function displayApplicants(applicants) {
+            const applicantList = document.getElementById("applicantList");
+            applicantList.innerHTML = "";
+
+            if (applicants.length === 0) {
+                applicantList.innerHTML = "<li>No applicants yet.</li>";
+                return;
+            }
+
+            applicants.forEach((applicant, index) => {
+                const applicantItem = document.createElement("li");
+
+                applicantItem.className = `applicant-item ${applicant.status}`;
+                applicantItem.innerHTML = `
+                    <div class="applicant-info">
+                        <div class="name">Name: ${applicant.name}</div>
+                        <div class="cv">CV: <a href="${applicant.cv}" download>Download</a> <a href="#" onclick="previewFile('${applicant.cv}')">Preview</a></div>
+                        <div class="identity">Identity: <a href="${applicant.identity}" download>Download</a> <a href="#" onclick="previewFile('${applicant.identity}')">Preview</a></div>
+                        <div class="skck">SKCK: <a href="${applicant.skck}" download>Download</a> <a href="#" onclick="previewFile('${applicant.skck}')">Preview</a></div>
+                        <div class="photo">Photo: <a href="${applicant.photo}" download>Download</a> <a href="#" onclick="previewFile('${applicant.photo}')">Preview</a></div>
+                        <div class="transcript">Transcript: <a href="${applicant.transcript}" download>Download</a> <a href="#" onclick="previewFile('${applicant.transcript}')">Preview</a></div>
+                        <div class="certifications">Certifications: <a href="${applicant.certifications}" download>Download</a> <a href="#" onclick="previewFile('${applicant.certifications}')">Preview</a></div>
+                        <div class="portfolio">Portfolio: <a href="${applicant.portfolio}" download>Download</a> <a href="#" onclick="previewFile('${applicant.portfolio}')">Preview</a></div>
+                        <div class="workCertificate">Work Certificate: <a href="${applicant.workCertificate}" download>Download</a> <a href="#" onclick="previewFile('${applicant.workCertificate}')">Preview</a></div>
+                        <div class="position">Position Applied: ${applicant.position}</div>
+                    </div>
+
+                    <!-- Kontainer untuk modal preview -->
+                    <div class="modal" id="preview-modal">
+                        <img src="" alt="Preview" id="preview-image">
+                        <span class="close" onclick="closeModal()">×</span>
+                    </div>
+
+                    <div class="applicant-actions">
+                        <button class="accept-btn" onclick="updateStatus(${index}, 'accepted')">Accept</button>
+                        <button class="reject-btn" onclick="updateStatus(${index}, 'rejected')">Reject</button>
+                    </div>
+                `;
+                applicantList.appendChild(applicantItem);
+            });
+        }
+
+        function searchApplicants() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const applicants = JSON.parse(localStorage.getItem("applicants")) || [];
+
+            const filteredApplicants = applicants.filter(applicant =>
+                applicant.name.toLowerCase().includes(searchInput)
+            );
+
+            displayApplicants(filteredApplicants);
+        }
+
+        function updateStatus(index, status) {
+            const applicants = JSON.parse(localStorage.getItem("applicants")) || [];
+            const applicant = applicants[index];
+
+            // Create notification
+            const notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            let notificationMessage = '';
+
+            if (status === 'rejected') {
+                notificationMessage = `Applicant ${applicant.name} has been rejected for the position of ${applicant.position}.`;
+                applicants.splice(index, 1); // Remove applicant
+            } else {
+                notificationMessage = `Applicant ${applicant.name} has been accepted for the position of ${applicant.position}.`;
+                applicants.splice(index, 1); // Remove applicant
+            }
+
+            // Add notification
+            notifications.push({ message: notificationMessage });
+            localStorage.setItem("notifications", JSON.stringify(notifications));
+
+            // Update applicants
+            localStorage.setItem("applicants", JSON.stringify(applicants));
+            displayApplicants(applicants);
+        }
+
+
+        // Load applicants when the page loads
+        window.onload = loadApplicants;
+
+        function previewFile(url) {
+            const modal = document.getElementById('preview-modal');
+            const image = document.getElementById('preview-image');
+
+            image.src = url;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('preview-modal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

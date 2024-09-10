@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat Lowongan</title>
+  <link rel="icon" type="image/png" href="img/wgo.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .navbar {
+      background-color: #000;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      width: 100%;
+      height: 50px;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      padding: 10px;
+      color: white;
+      /* Ensure link color is white for visibility */
+    }
+
+    .navbar a:hover {
+      background-color: #575757;
+    }
+
+    .sidebar {
+      background-color: white;
+      padding: 20px;
+      width: 200px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      height: calc(100vh - 50px);
+      position: fixed;
+      top: 50px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-menu {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar-menu li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar-menu li a {
+      text-decoration: none;
+      color: #333;
+      padding: 10px 20px;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .sidebar-menu li a.active {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .sidebar-menu li a:hover {
+      background-color: dodgerblue;
+      color: white;
+    }
+
+    .content {
+      margin-left: 220px;
+      margin-top: 20px;
+      padding: 20px;
+      overflow-y: auto;
+      height: calc(100vh - 50px);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #countJobsButton {
+      padding: 8px 15px;
+      background-color: dodgerblue;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #countJobsButton:hover {
+      background-color: cadetblue;
+    }
+
+    .job-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    .job-item:last-child {
+      border-bottom: none;
+    }
+
+    .job-item h3 {
+      margin: 0;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .form-buttons button {
+      padding: 8px;
+      background-color: dodgerblue;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100px;
+    }
+
+    .form-buttons button:hover {
+      background-color: cadetblue;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar" style="padding-top:5px;">
+    <div class="logo">
+      <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+    </div>
+  </nav>
+
+  <div class="sidebar">
+    <ul class="sidebar-menu">
+      <li><a href="profil.html">Profil Perusahaan</a></li>
+      <li><a href="kandidat.html">Kandidat Tersedia</a></li>
+      <li><a href="loker.html">Buat Lowongan</a></li>
+      <li class="active"><a href="company-dashboard.html">Pengaturan</a></li>
+      <li><a href="index.html" onclick="logout()">Log Out</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div class="container">
+      <div class="job-header">
+        <h2>Riwayat Lowongan</h2>
+        <button id="countJobsButton">Jumlah Semua Lowongan</button>
+      </div>
+      <div id="jobList"></div>
+    </div>
+  </div>
+
+  <script>
+    function populateJobList() {
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      const jobList = document.getElementById('jobList');
+      jobList.innerHTML = '';
+
+      if (jobs.length === 0) {
+        jobList.innerHTML = '<p>No job listings available.</p>';
+        return;
+      }
+
+      jobs.forEach((job, index) => {
+        const jobItem = document.createElement('div');
+        jobItem.classList.add('job-item');
+        jobItem.innerHTML = `
+              <h3>${job.jobTitle}</h3>
+              <div class="job-details">
+                <p>Posisi: ${job.jobPosition}</p>
+                <p>Tipe Pekerjaan: ${job.jobType}</p>
+                <p>Lokasi: ${job.jobLocation}</p>
+                <p>Kandidat Dibutuhkan: ${job.candidatesNeeded}</p>
+                <p>Deskripsi Pekerjaan: ${job.jobDescription}</p>
+                <p>Rentang Gaji: ${job.salaryMin}</p>
+                <p>Aktif Hingga: ${job.jobActiveUntil}</p>
+                <p>Pengalaman Kerja: ${job.experience}</p>
+                <p>Kontak: ${job.contactInfo}</p>       
+              </div>
+              <div class="form-buttons">
+                <button onclick="viewJob('${index}')">Pratinjau</button>
+                <button onclick="editJob('${index}')">Edit</button>
+                <button onclick="duplicateJob('${index}')">Duplikat</button>
+                <button onclick="deleteJob('${index}')">Hapus</button>
+              </div>
+            `;
+        jobList.appendChild(jobItem);
+      });
+    }
+
+
+    document.getElementById('countJobsButton').addEventListener('click', function () {
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      alert(`Total Lowongan: ${jobs.length}`);
+    });
+
+    function viewJob(index) {
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      const job = jobs[index];
+      localStorage.setItem('viewJob', JSON.stringify(job));
+      window.location.href = 'Pratinjau.html';
+    }
+
+    function editJob(index) {
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      const job = jobs[index];
+      localStorage.setItem('editJob', JSON.stringify(job));
+      window.location.href = 'edit_lowongan.html';
+    }
+
+    function duplicateJob(index) {
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      const job = jobs[index];
+      const newJob = {...job, jobTitle: job.jobTitle + ' - Copy'};
+      jobs.push(newJob);
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+      populateJobList();
+    }
+
+    function deleteJob(index) {
+      let jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+
+      // Tambahkan konfirmasi penghapusan
+      if (confirm('Apakah Anda yakin ingin menghapus lowongan ini?')) {
+        jobs.splice(index, 1);
+        localStorage.setItem('jobs', JSON.stringify(jobs));
+        populateJobList();
+      }
+    }
+
+    function logout() {
+      // Implement logout functionality here
+      alert("Logged out successfully.");
+    }
+
+    window.onload = populateJobList;
+  </script>
+</body>
+
+</html>

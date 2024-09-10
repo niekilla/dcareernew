@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Jobs</title>
+    <link rel="icon" type="image/png" href="img/wgo.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        li p {
+            margin-top: 5px;
+            color: #666;
+        }
+
+        .remove-icon {
+            position: absolute;
+            right: 40px;
+            top: 10px;
+            color: #ff0000;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .apply-button {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-top: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .apply-button:hover {
+            background-color: #45a049;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+            /* Center the button horizontally */
+            margin-top: 20px;
+            /* Adjust spacing as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Save Lowongan</h2>
+        <p>Your saved job listings:</p>
+        <ul id="saved-jobs-list">
+            <!-- Saved jobs will be displayed here -->
+        </ul>
+    </div>
+    <div class="form-buttons">
+        <a href="lowongan jobseeker.html" class="apply-button">Back</a>
+    </div>
+
+    <script>
+        // Retrieve saved jobs from localStorage
+        let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+        const savedJobsList = document.getElementById('saved-jobs-list');
+
+        // Display saved jobs
+        function renderSavedJobs() {
+            savedJobsList.innerHTML = ''; // Clear existing list items
+
+            savedJobs.forEach((job, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#">${job.title}</a>
+                    <p><strong>Position:</strong> ${job.position}</p>
+                    <p><strong>Type:</strong> ${job.type}</p>
+                    <p><strong>Candidates Needed:</strong> ${job.candidates}</p>
+                    <p><strong>Location:</strong> ${job.location}</p>
+                    <p><strong>Salary Range:</strong> ${job.salaryMin} - ${job.salaryMax}</p>
+                    <p><strong>Active Until:</strong> ${job.activeUntil}</p>
+                    <p><strong>Contact:</strong> ${job.contactInfo}</p>
+                    <span class="remove-icon" onclick="removePosition(${index})">&#x1F5D1;</span>
+                    <button class="apply-button" onclick="applyToJob(${index})">Apply</button>
+                `;
+                savedJobsList.appendChild(li);
+            });
+        }
+
+        // Function to remove a job from localStorage
+        function removePosition(index) {
+            savedJobs.splice(index, 1); // Remove job from array
+            localStorage.setItem('savedJobs', JSON.stringify(savedJobs)); // Update localStorage
+            renderSavedJobs(); // Update display
+        }
+
+        // Function to handle job application
+        function applyToJob(index) {
+            const job = savedJobs[index];
+            if (job) {
+                // Redirect to application page with job title as a query parameter
+                window.location.href = `apply lowongan.html?job=${encodeURIComponent(job.title)}`;
+            }
+        }
+
+        // Initial rendering of saved jobs
+        renderSavedJobs();
+    </script>
+
+</body>
+
+</html>
